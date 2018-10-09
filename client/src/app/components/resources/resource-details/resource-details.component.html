@@ -1,0 +1,120 @@
+<nav class="navbar navbar-light bg-light">
+  <span class="lead">Resource Details</span>
+  <span class="fill-space"></span>
+  <a class="btn btn-outline-secondary" (click)="addAttr()"><i class="fas fa-plus"></i> Attribute</a>
+  <a class="btn btn-outline-secondary" [routerLink]="['./new']"><i class="fas fa-equals"></i> Section</a>
+</nav>
+
+<form novalidate #f="ngForm" (ngSubmit)="onSubmit()" class="form-group">
+  <div class="form-group row" *ngIf="resource_id?.id">
+    <label for="id" class="col-sm-2 col-form-label">ID</label>
+    <div class="col-sm-10">
+      <span id="id" name="id" class="form-control-plaintext">{{resource.id}}</span>
+    </div>
+  </div>
+
+  <div class="form-group row required">
+    <label for="instance_id" class="col-sm-2 col-form-label">Instance ID</label>
+    <div class="col-sm-10">
+      <!-- <span id="instance_id" name="instance_id" class="form-control-plaintext" *ngIf="user.instance_id">{{user.instance_id}}</span> -->
+      <select class="form-control" id="instance_id" name="instance_id" [(ngModel)]="selected_instance" required [ngClass]="{
+      'is-invalid': !selected_instance,
+      'is-valid': selected_instance
+      }">
+        <option *ngFor="let key of getKeys(instances)" [value]="key">{{instances[key]}}</option>
+      </select>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row required">
+    <label for="title" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" [ngClass]="{
+      'is-invalid': title.invalid,
+      'is-valid': title.valid
+    }" #title="ngModel" id="title" name="title" [(ngModel)]="resource.title" aria-describedby="nameHelpBlock" minlength="4" required>
+      <small id="nameHelpBlock" class="form-text text-muted">
+        Must be mininum 4 characters long.
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group" *ngFor="let attribute of resource.attributes">
+    <div class="card">
+      <div class="card-body">
+        <div class="form-group row">
+          <label for="attr_title" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input type="text" id="attr_title" name="attr_title" class="form-control" [(ngModel)]="attribute.title">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="attr_help_text" class="col-sm-2 col-form-label">Help Text</label>
+          <div class="col-sm-10">
+            <textarea id="attr_help_text" name="attr_help_text" class="form-control" [(ngModel)]="attribute.help_text">
+            </textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="attr_type" class="col-sm-2 col-form-label">Type</label>
+          <div class="col-sm-10">
+            <select name="attr_type" id="attr_type" class="form-control" [(ngModel)]="attribute.type">
+              <option>Single Line Text</option>
+              <option>Multi Line Text</option>
+              <option>Dropdown</option>
+              <option>Multi Select</option>
+              <option>Checkboxes</option>
+              <option>Linear Scale</option>
+              <option>Multi Choice Grid</option>
+              <option>Checkbox Grid</option>
+              <option>Date</option>
+              <option>Datetime</option>
+              <option>Time</option>
+              <option>File Upload</option>
+            </select>
+          </div>
+        </div>
+        <div class="">
+          <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Validations
+          </a>
+          <div class="collapse" id="collapseExample">
+            test
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="attr_required" class="col-sm-2 col-form-label">Required</label>
+          <div class="col-sm-10">
+            <input type="checkbox" id="attr_required" name="attr_required" [(ngModel)]="attribute.required" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="resource.created_at">
+    <label for="created_at" class="col-sm-2 col-form-label">Created At</label>
+    <div class="col-sm-10">
+      <span id="created_at">{{resource.created_at | date:'long'}}</span>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="resource.modified_at">
+    <label for="modified_at" class="col-sm-2 col-form-label">Modified At</label>
+    <div class="col-sm-10">
+      <span id="modified_at">{{resource.modified_at | date:'long'}}</span>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit" class="btn btn-outline-primary" [disabled]="!form.valid">Save</button>
+    <button type="button" class="btn btn-outline-danger" *ngIf="resource.id" (click)="delete(resource.instance_id, resource.id, resource.title)">Delete</button>
+    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+  </div>
+
+</form>
+
+{{resource | json}} {{sections | json}}

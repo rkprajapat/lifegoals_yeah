@@ -1,0 +1,90 @@
+<h1 class="lead">User Details</h1>
+
+<form novalidate #f="ngForm" (ngSubmit)="onSubmit()" class="form-group">
+  <div class="form-group row" *ngIf="user.id">
+    <label for="id" class="col-sm-2 col-form-label">ID</label>
+    <div class="col-sm-10">
+      <span id="id" name="id" class="form-control-plaintext">{{user.id}}</span>
+    </div>
+  </div>
+
+  <div class="form-group row required">
+    <label for="instance_id" class="col-sm-2 col-form-label">Instance ID</label>
+    <div class="col-sm-10">
+      <span id="instance_id" name="instance_id" class="form-control-plaintext" *ngIf="user.instance_id">{{user.instance_id}}</span>
+      <select *ngIf="!user.instance_id" class="form-control" id="instance_id" name="instance_id" [(ngModel)]="selected_instance" required [ngClass]="{
+      'is-invalid': !selected_instance,
+      'is-valid': selected_instance
+      }">
+        <option *ngFor="let key of getKeys(instances)" [value]="key">{{instances[key]}}</option>
+      </select>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row required">
+    <label for="name" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" [ngClass]="{
+      'is-invalid': name.invalid,
+      'is-valid': name.valid
+    }" #name="ngModel" id="name" name="name" [(ngModel)]="user.name" aria-describedby="nameHelpBlock" minlength="4" required>
+      <small id="nameHelpBlock" class="form-text text-muted">
+        Must be mininum 4 characters long.
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group row required">
+    <label for="email" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" [ngClass]="{
+      'is-invalid': email.invalid,
+      'is-valid': email.valid
+    }" #email="ngModel" checkedid="email" name="email" [(ngModel)]="user.email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="active" class="col-sm-2 form-check-label">Active</label>
+    <div class="col-sm-10">
+      <input type="checkbox" class="form-check-input" id="active" name="active" [(ngModel)]="user.active">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="admin" class="col-sm-2 form-check-label">Admin</label>
+    <div class="col-sm-10">
+      <input type="checkbox" class="form-check-input" id="admin" name="admin" [(ngModel)]="user.admin">
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="user.last_login">
+    <label for="last_login" class="col-sm-2 col-form-label">Last Login</label>
+    <div class="col-sm-10">
+      <span id="last_login">{{user.last_login | date:'long'}}</span>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="user.created_at">
+    <label for="created_at" class="col-sm-2 col-form-label">Created At</label>
+    <div class="col-sm-10">
+      <span id="created_at">{{user.created_at | date:'long'}}</span>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="user.modified_at">
+    <label for="modified_at" class="col-sm-2 col-form-label">Modified At</label>
+    <div class="col-sm-10">
+      <span id="modified_at">{{user.modified_at | date:'long'}}</span>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit" class="btn btn-outline-primary" [disabled]="!form.valid">Save</button>
+    <button type="button" class="btn btn-outline-danger" *ngIf="user.id" (click)="delete(user.instance_id, user.id, user.name)">Delete</button>
+    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+  </div>
+
+</form>

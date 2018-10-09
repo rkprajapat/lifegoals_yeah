@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Permanent delete</h2>
+<mat-dialog-content>
+  Are you sure you want to delete {{data.type}} <b><i>{{data.name}}</i></b>?
+  <p>
+    <small>Once deleted, content can not be restored.</small>
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button  color="warn" [mat-dialog-close]="1">YES</button>
+  <button mat-raised-button [mat-dialog-close]="0">Cancel</button>
+</mat-dialog-actions>

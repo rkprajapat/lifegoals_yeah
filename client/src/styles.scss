@@ -1,0 +1,88 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~ng-snotify/styles/material";
+
+.fullwidth {
+    width: 100%;
+}
+
+mat-form-field {
+  width: 60%;
+  padding: 10px;
+}
+
+form{
+  padding: 10px;
+}
+
+mat-slide-toggle{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* Absolute Center Spinner */
+.spinner {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.spinner:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.fill-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+/*
+used to align icons with text
+ */
+.material-icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+a.mat-raised-button{
+  text-decoration: none;
+}
+
+label.col-form-label{
+  // bold all form labels
+  font-weight: bold;
+}
+
+label.form-check-label{
+  font-weight: bold;
+}
+
+// Adds a red asterix on required form elements
+.form-group.required .col-form-label:after {
+   content:"*";
+   color:red;
+}
+
+
+.btn{
+  margin-right: 5px;
+}

@@ -1,0 +1,60 @@
+<mat-toolbar>
+  <span>Instances</span>
+  <span class="fill-space"></span>
+  <a class="mat-raised-button" [routerLink]="['./new']"><i class="material-icons"> add </i> New</a>
+
+</mat-toolbar>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let instance of instances">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{instance.name | titlecase}}
+      </mat-panel-title>
+      <mat-panel-description>
+        <mat-chip-list>
+          <mat-chip color="primary" selected>ID: {{instance.id}}</mat-chip>
+          <mat-chip *ngIf="!instance.active" color="warn" selected>Inactive</mat-chip>
+        </mat-chip-list>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-card>
+      <mat-card-content>
+        <form class="form-horizontal">
+          <div class="form-group row">
+            <label for="name" class="col-form-label col-sm-2">Name:</label>
+            <div class="col-sm-10">
+              <input [value]="instance.name" class="form-control-plaintext" id="name" readonly>
+            </div>
+
+            <label for="owner_name" class="col-form-label col-sm-2">Owner Name:</label>
+            <div class="col-sm-10">
+              <input [value]="instance.owner_name" class="form-control-plaintext" id="owner_name" readonly>
+            </div>
+
+            <label for="owner_email" class="col-form-label col-sm-2">Owner Email:</label>
+            <div class="col-sm-10">
+              <input [value]="instance.owner_email" class="form-control-plaintext" id="owner_email" readonly>
+            </div>
+
+            <label for="active" class="col-form-label col-sm-2">Active:</label>
+            <div class="col-sm-10">
+              <input type="checkbox" [checked]="instance.active" class="form-check" id="active" disabled>
+            </div>
+          </div>
+        </form>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [routerLink]="['./' + instance.id]">Edit</button>
+        <button mat-raised-button color="warn" (click)="delete(instance.id, instance.name)">Delete</button>
+        <button mat-raised-button>Cancel</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        <mat-chip-list>
+          <mat-chip><small>Created: {{instance.created_at | date:'long' }}</small></mat-chip>
+          <mat-chip><small>Modified: {{instance.modified_at | date:'long' }}</small></mat-chip>
+        </mat-chip-list>
+      </mat-card-footer>
+    </mat-card>
+  </mat-expansion-panel>
+</mat-accordion>
