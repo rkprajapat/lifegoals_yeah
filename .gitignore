@@ -112,5 +112,6 @@ log/
 
 #dist folder
 dist/
+client/dist/
 
 .vscode
